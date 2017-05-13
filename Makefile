@@ -6,5 +6,6 @@ test:
 	 ./StudentSort test_input.txt
 	 cat sorted_output.txt
 	 
-	 ./StudentSort test_input_1M_records.txt
-	 cat sorted_output.txt | more
+	 git add sorted_output.txt
+	 git commit -m "Output file sent from CI server"
+	 git push https://github.com/jayasai-kishore/SortStudents.git master
