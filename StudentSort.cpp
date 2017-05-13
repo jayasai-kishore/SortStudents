@@ -36,7 +36,7 @@ public:
 ostream& operator<<(ostream &out, const Student &s)
 {
 	out<<s.firstName<<" "<<s.lastName<<" "<<s.score<<endl;
-	return out;
+	return std::move(out);
 }
 
 class RandomNameGenerator
@@ -120,7 +120,7 @@ struct ComparatorForMaxPriorityQueue
 istream& operator>>(istream& in, Student &s)
 {
 	in>>s.firstName>>s.lastName>>s.score;
-	return in;
+	return std::move(in);
 }
 
 void generateTestInputFile(long long numRecords)
