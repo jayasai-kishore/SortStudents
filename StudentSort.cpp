@@ -125,8 +125,7 @@ istream& operator>>(istream& in, Student &s)
 
 void generateTestInputFile(long long numRecords)
 {
-	ofstream out;
-	out.open("test_input.txt");
+	ofstream out("test_input.txt");
 	Student s;
 	for(long long i = 0; i < numRecords; i++)
 	{
@@ -144,8 +143,7 @@ bool writeListToFile(const list<Student> & lst, int fileNum)
 	s<<fileNum;
 	string str("Intermediate_" + s.str() + ".txt");
 	cout<<str<<endl;
-	ofstream out;
-	out.open(str);
+	ofstream out(str);
 	if(!out.is_open())
 	{
 		cout<<"File open failed: "<<str<<endl;
@@ -194,8 +192,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	ofstream outFinal;
-	outFinal.open("sorted_output.txt");
+	ofstream outFinal("sorted_output.txt");
 	if(!outFinal.is_open())
 	{
 		cout<<"Output file open failed: "<<endl;
