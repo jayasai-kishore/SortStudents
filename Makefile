@@ -1,3 +1,3 @@
 
 all:
-	$(CXX) -Wall -Wextra StudentSort.cpp -o StudentSort
+	$(CXX) -pthread -std=c++11 -Wall -Wextra StudentSort.cpp -o StudentSort
