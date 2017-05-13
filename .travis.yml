@@ -1,2 +1,2 @@
 -language: cpp
--g++ StudentSort.cpp
+-script: g++ StudentSort.cpp
