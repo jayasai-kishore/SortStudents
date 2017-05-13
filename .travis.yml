@@ -7,7 +7,6 @@ before_install:
 
 install:
 - sudo apt-get install -qq g++-4.8
-- sudo apt-get install -qq gcc-6.3
-- export CXX="gcc-6.3"
+- export CXX="g++-4.8"
 
 script: "bash -c ./build.sh"
