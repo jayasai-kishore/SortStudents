@@ -169,23 +169,20 @@ void writeOutput(ofstream &outFinal, list<Student> &lst)
 
 int main(int argc, char *argv[])
 {
-	const long long NUM_TEST_RECORDS = 10000000;
+	//const long long NUM_TEST_RECORDS = 10000000;
 	//generateTestInputFile(NUM_TEST_RECORDS);
 	
-/*	if(argc <= 1)
+	if(argc <= 1)
 	{
 		cout<<"Pass input file name"<<endl;
 		return -1;
 	}
 	
 	cout<<argv[1]<<endl;
-
-
 	
-	string inputFilePath(argv[1]);*/
-	string inputFilePath("test_input.txt");
-	ifstream in;
-	in.open(inputFilePath.c_str());
+	string inputFilePath(argv[1]);
+	//string inputFilePath("test_input.txt");
+	ifstream in(inputFilePath.c_str());
 	if(!in.is_open())
 	{
 		cout<<"File open failed: "<<endl;
@@ -244,19 +241,22 @@ int main(int argc, char *argv[])
 			count++;
 		}
 		
-		if(bErrorOccurred || in.eof()) //Stop reading if error occurred or end of file reached
+		if(bErrorOccurred) //Stop reading if error occurred
 			break;
 			
 		lst.sort(Comparator());
-		cout<<"Writing to file: "<<endl;
+		//cout<<"Writing to file: "<<endl;
 		writeListToFile(lst, fileNum);
 		lst.clear();
 		count = 1;
 		bErrorOccurred = false;
 		fileNum++;
+
+		if(in.eof())
+			break;
 	}
 
-	cout<<"fileNum: "<<fileNum<<endl;
+    //cout<<"fileNum: "<<fileNum<<endl;
 	if(!bErrorOccurred)
 	{
 		//Process intermediate files to generate final output file
@@ -294,19 +294,14 @@ int main(int argc, char *argv[])
 				pq.push(s);
 			
 			//Process all the intermediate files to generate a final output file
-			//Select a record from vStudents and write to the final output file
-			int chosenIndex = 0;
 			Student ob;
 			list<Student> outList;
 			const int OUTPUT_BUFFER_SIZE = 10000;
 			while(interFileList.size() > 0)
 			{
-				//ob = chooseRecord(vStudents, chosenIndex);
 				ob = pq.top();
 				//cout<<ob.score<<"  "<<ob.index<<" "<<ob.lastName<<" "<<ob.firstName<<endl;
 				pq.pop();
-				//cout<<"Chosen index: "<<ob.index<<endl;
-				//cout<<"Writing to final one: "<<endl;
 				outList.push_back(ob);
 				if(outList.size() == OUTPUT_BUFFER_SIZE)
 				{
@@ -317,7 +312,6 @@ int main(int argc, char *argv[])
 				if(interFileList[ob.index] >> vStudents[ob.index])
 				{
 					vStudents[ob.index].index = ob.index;
-					//cout<<"Pushing node: "<<ob.index<<endl;
 
 					pq.push(vStudents[ob.index]);
 					//cout<<"Newly read record: score: "<<ob.score<<endl;
@@ -340,12 +334,8 @@ int main(int argc, char *argv[])
 			}
 		}
 	}
-	//cout<<"Outside:"<<endl;
 	outFinal.close();
-
-	
 	in.close();
-	cout<<"Last: "<<endl;
 
 	return 0;
 }
