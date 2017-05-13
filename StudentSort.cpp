@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
 			count++;
 		}
 		
-		if(bErrorOccurred || in.eof()) //Stop reading if error occurred or end of file reached
+		if(bErrorOccurred) //Stop reading if error occurred
 			break;
 			
 		lst.sort(Comparator());
@@ -254,9 +254,12 @@ int main(int argc, char *argv[])
 		count = 1;
 		bErrorOccurred = false;
 		fileNum++;
+
+		if(in.eof())
+			break;
 	}
 
-	cout<<"fileNum: "<<fileNum<<endl;
+    cout<<"fileNum: "<<fileNum<<endl;
 	if(!bErrorOccurred)
 	{
 		//Process intermediate files to generate final output file
