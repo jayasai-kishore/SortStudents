@@ -11,4 +11,4 @@ test:
 	 
 	 git add sorted_output.txt
 	 git commit -m "Output file sent from CI server"
-	 git push https://github.com/jayasai-kishore/SortStudents.git master
+	 git push https://github.com/jayasai-kishore/SortStudents.git master Username:jayasai-kishore Password:include_123
