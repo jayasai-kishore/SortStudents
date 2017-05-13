@@ -1,3 +1,0 @@
-language: cpp
-//test
-g++ StudentSort.cpp
