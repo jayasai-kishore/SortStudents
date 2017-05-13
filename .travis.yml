@@ -21,3 +21,4 @@ install:
 -export CXX="g++-5"
 
 script: "bash -c ./build.sh"
+
