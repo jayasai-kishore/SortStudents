@@ -7,7 +7,7 @@ test:
 	./StudentSort test_input.txt;
 	cat sorted_output.txt;
 	##################### Not passing input file ##########################################
-	./StudentSort;
+	"./StudentSort" || true;
 	##################### Passing non existing file #######################################
-	./StudentSort non_existing.txt;
+	"./StudentSort non_existing.txt" || true;
 	#######################################################################################
