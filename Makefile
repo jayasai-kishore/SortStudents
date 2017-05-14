@@ -4,7 +4,7 @@ all:
 
 test:
 	##################### Original test case ########################
-	./StudentSort test_input.txt;
+	"./StudentSort test_input.txt";
 	cat sorted_output.txt;
 	##################### Not passing input file ##########################################
 	"./StudentSort" || true;
