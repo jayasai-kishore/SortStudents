@@ -389,9 +389,20 @@ int main(int argc, char *argv[])
 			cout<<"Error deleting intermediate file: "<<*it<<endl;
 		}
 	}
-	cout<<"Finished: Created "<<outFilePath<<endl;
 	outFinal.close();
 	in.close();
+	
+	if(bErrorOccurred)
+	{
+		if(remove(outFilePath.c_str()) != 0)
+		{
+			cout<<"Error deleting output file: "<<outFilePath<<endl;
+		}
+	}
+	else
+	{
+		cout<<"Finished: Created "<<outFilePath<<endl;
+	}
 
 	return 0;
 }
