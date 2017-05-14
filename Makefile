@@ -37,6 +37,3 @@ test:
 	./StudentSort test_input_1k_records.txt || true;
 	cat test_input_1k_records-graded.txt;
 	#######################################################################################
-	./StudentSort test_input_1M_records.txt || true;
-	cat test_input_1M_records-graded.txt;
-	#######################################################################################
