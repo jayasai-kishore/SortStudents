@@ -3,8 +3,11 @@ all:
 	$(CXX) -std=c++11 -Wall -Wextra StudentSort.cpp -o StudentSort
 
 test:
-	echo "#################################################################################";
-	echo "Original test case";
+	##################### Original test case ########################
 	./StudentSort test_input.txt;
 	cat sorted_output.txt;
-	echo "#################################################################################";
+	##################### Not passing input file ##########################################
+	./StudentSort;
+	##################### Passing non existing file #######################################
+	./StudentSort non_existing.txt;
+	#######################################################################################
