@@ -4,18 +4,23 @@ all:
 
 test:
 	##################### Original test case ########################
-	./StudentSort test_input.txt;
-	cat sorted_output.txt;
+	./StudentSort test_input;
+	cat test_input-graded.txt;
 	##################### Not passing input file ##########################################
 	./StudentSort || true;
 	##################### Passing non existing file #######################################
-	./StudentSort non_existing.txt || true;
+	./StudentSort non_existing || true;
 	##################### Passing empty input file ########################################
-	./StudentSort test_input_0_records.txt || true;
+	./StudentSort test_input_0_records || true;
 	##################### Passing input file with 1 record ################################
-	./StudentSort test_input_1_record.txt || true;
+	./StudentSort test_input_1_record || true;
+	cat test_input_1_record-graded.txt;
 	##################### Passing input file with invalid content #########################
-	./StudentSort test_input_invalid_content.txt || true;
+	./StudentSort test_input_invalid_content || true;
 	##################### Passing input file with negative marks ##########################
-	./StudentSort test_input_negative_marks.txt || true;
+	./StudentSort test_input_negative_marks || true;
+	cat test_input_negative_marks-graded.txt;
+	##################### Passing input with 1000 records #################################
+	./StudentSort test_input_1k_records || true;
+	cat test_input_1k_records-graded.txt;
 	#######################################################################################
