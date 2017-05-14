@@ -169,7 +169,7 @@ bool writeListToFile(const list<Student> & lst, size_t fileNum, list<string> &in
 	stringstream s;
 	s<<fileNum;
 	string str("Intermediate_" + s.str() + ".txt");
-	cout<<str<<endl;
+	//cout<<str<<endl;
 	ofstream out(str);
 	if(!out.is_open())
 	{
@@ -209,7 +209,19 @@ int main(int argc, char *argv[])
 	cout<<argv[1]<<endl;
 	
 	string inputFilePath(argv[1]);
-	//string inputFilePath("test_input_1k_records");
+	//string inputFilePath("test_input_1k_records.txt");
+	size_t pos = inputFilePath.find(".txt");
+	string inputFilePathNoExtn;
+	if((pos != string::npos) && (inputFilePath.length() == (pos + 4))) //4 is the length of .txt
+	{
+		inputFilePathNoExtn = inputFilePath.substr(0, pos);
+	}
+	else
+	{
+		cout<<"Input file invalid extension "<<endl;
+		return -1;
+	}
+	cout<<"Input path with no extn: "<<inputFilePathNoExtn<<endl;
 	ifstream in(inputFilePath.c_str());
 	if(!in.is_open())
 	{
@@ -217,7 +229,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	ofstream outFinal(string(argv[1]) + "-graded.txt");
+	ofstream outFinal(inputFilePathNoExtn + "-graded.txt");
 	if(!outFinal.is_open())
 	{
 		cout<<"Output file open failed: "<<endl;
@@ -251,7 +263,7 @@ int main(int argc, char *argv[])
 					}
 					else
 					{
-						cout<<"End of file:"<<endl;
+						//cout<<"End of file:"<<endl;
 						break;	//End of file
 					}
 				}
