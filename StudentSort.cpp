@@ -206,7 +206,7 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 	
-	cout<<argv[1]<<endl;
+	//cout<<argv[1]<<endl;
 	
 	string inputFilePath(argv[1]);
 	//string inputFilePath("test_input_1k_records.txt");
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
 		cout<<"Input file invalid extension "<<endl;
 		return -1;
 	}
-	cout<<"Input path with no extn: "<<inputFilePathNoExtn<<endl;
+	//cout<<"Input path with no extn: "<<inputFilePathNoExtn<<endl;
 	ifstream in(inputFilePath.c_str());
 	if(!in.is_open())
 	{
@@ -229,7 +229,8 @@ int main(int argc, char *argv[])
 		return -1;
 	}
 
-	ofstream outFinal(inputFilePathNoExtn + "-graded.txt");
+	string outFilePath(inputFilePathNoExtn + "-graded.txt");
+	ofstream outFinal(outFilePath);
 	if(!outFinal.is_open())
 	{
 		cout<<"Output file open failed: "<<endl;
@@ -388,6 +389,7 @@ int main(int argc, char *argv[])
 			cout<<"Error deleting intermediate file: "<<*it<<endl;
 		}
 	}
+	cout<<"Finished: Created "<<outFilePath<<endl;
 	outFinal.close();
 	in.close();
 
