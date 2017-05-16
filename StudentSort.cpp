@@ -40,26 +40,47 @@ using namespace std;
 //Student class holds information of score, last name, first name
 class Student
 {
-public:
-	
-	int score;
+	int score = 0;
 	string firstName;
 	string lastName;
-	
-public:
 	size_t index = 0; //This is for storing the index of intermediate file from where next record to be fetched
 
+public:
+
 	Student()
-	:score(0)
 	{
 	}
-	Student(int score, string fName, string lName, size_t index)
+	Student(int score, string fName, string lName)
 	{
 		this->score = score;
 		this->firstName = fName;
 		this->lastName = lName;
+	}
+	
+	//Setter
+	void setIndex(size_t index)
+	{
 		this->index = index;
 	}
+	
+	//Getters
+	size_t getIndex() const 
+	{ 
+		return index; 
+	}
+	const string& getFirstName() const 
+	{ 
+		return firstName; 
+	}
+	const string& getLastName() const 
+	{ 
+		return lastName; 
+	}
+	int getScore() const 
+	{ 
+		return score; 
+	}
+	
 	friend istream& operator>>(istream& in, Student &s);
 	friend ostream& operator<<(ostream &out, const Student &s);
 };
@@ -99,13 +120,15 @@ public:
 //Not used in the core logic of sorting the data
 void generateTestInputFile(long long numRecords)
 {
-	ofstream out("test_input_10M_records.txt");
-	Student s;
+	ofstream out("test_input_sample.txt");
+	string firstName, lastName;
+	int score;
 	for(long long i = 0; i < numRecords; i++)
 	{
-		s.firstName = RandomNameGenerator::getRandomName();
-		s.lastName = RandomNameGenerator::getRandomName();
-		s.score = rand() % 101; //Score can be any where between 0 and 100 inclusive
+		firstName = RandomNameGenerator::getRandomName();
+		lastName = RandomNameGenerator::getRandomName();
+		score = rand() % 101; //Score can be any where between 0 and 100 inclusive
+		Student s(score, firstName, lastName);
 		out<<s;
 	}
 	out.close();
@@ -116,18 +139,18 @@ struct Comparator
 {
 	bool operator()(const Student &s1, const Student &s2)
 	{
-		if(s1.score == s2.score) //If scores are same, compare last names
+		if(s1.getScore() == s2.getScore()) //If scores are same, compare last names
 		{
-			if(s1.lastName == s2.lastName) //If last names are also same, compare first names
+			if(s1.getLastName() == s2.getLastName()) //If last names are also same, compare first names
 			{
-				if(s1.firstName.compare(s2.firstName) > 0)
+				if(s1.getFirstName().compare(s2.getFirstName()) > 0)
 					return true;
 				else
 					return false;
 			}
 			else
 			{
-				if(s1.lastName.compare(s2.lastName) > 0) //If last names are different, determine the order
+				if(s1.getLastName().compare(s2.getLastName()) > 0) //If last names are different, determine the order
 				{
 					return true;
 				}
@@ -137,7 +160,7 @@ struct Comparator
 		}
 		else
 		{
-			if(s1.score > s2.score) //If scores are different, determine the order
+			if(s1.getScore() > s2.getScore()) //If scores are different, determine the order
 				return true;
 			else
 				return false;
@@ -154,11 +177,11 @@ struct ComparatorForMaxPriorityQueue
 {
 	bool operator()(const Student &s1, const Student &s2)
 	{
-		if(s1.score == s2.score) //If scores are same, compare last names
+		if(s1.getScore() == s2.getScore()) //If scores are same, compare last names
 		{
-			if(s1.lastName == s2.lastName) //If last names are also same, compare first names
+			if(s1.getLastName() == s2.getLastName()) //If last names are also same, compare first names
 			{
-				if(s1.firstName.compare(s2.firstName) < 0)
+				if(s1.getFirstName().compare(s2.getFirstName()) < 0)
 					return true;
 				else
 					return false;
@@ -166,7 +189,7 @@ struct ComparatorForMaxPriorityQueue
 			else
 			{
 				//If last names are different, determine the order as per max heap requirement
-				if(s1.lastName.compare(s2.lastName) < 0)
+				if(s1.getLastName().compare(s2.getLastName()) < 0)
 				{
 					return true;
 				}
@@ -176,7 +199,7 @@ struct ComparatorForMaxPriorityQueue
 		}
 		else
 		{
-			if(s1.score < s2.score) //If scores are different, determine the order as per max heap requirement
+			if(s1.getScore() < s2.getScore()) //If scores are different, determine the order as per max heap requirement
 				return true;
 			else
 				return false;
@@ -204,7 +227,7 @@ bool writeListToFile(const list<Student> &lst, const size_t fileNum, list<string
 		
 	for(auto it = lst.begin(); it != lst.end(); it++)
 	{
-		out<<it->firstName<<" "<<it->lastName<<" "<<it->score<<endl;
+		out<<it->getFirstName()<<" "<<it->getLastName()<<" "<<it->getScore()<<endl;
 	}
 	out.close();
 	intermediateFileList.push_back(str);
@@ -224,7 +247,7 @@ void writeOutput(ofstream &outFinal, const list<Student> &lst)
 int main(int argc, char *argv[])
 {
 	//Below code is commented because it is required only when generating test data
-	//const long long NUM_TEST_RECORDS = 9999990;
+	//const long long NUM_TEST_RECORDS = 100;
 	//generateTestInputFile(NUM_TEST_RECORDS);
 	
 	//As per the program requirement, input file must be passed as command line argument
@@ -318,8 +341,8 @@ int main(int argc, char *argv[])
 				//First name and Last name must start with an alphabet and
 				//There must be comma character at the end in both the names
 				//If these conditions are not satisfied, flag it as an error
-				else if((ob.firstName.empty() || !isalpha(ob.firstName[0]) || ob.firstName[ob.firstName.length() - 1] != ',')
-					 || (ob.lastName.empty() || !isalpha(ob.lastName[0]) || ob.lastName[ob.lastName.length() - 1] != ','))
+				else if((ob.getFirstName().empty() || !isalpha(ob.getFirstName()[0]) || ob.getFirstName()[ob.getFirstName().length() - 1] != ',')
+					 || (ob.getLastName().empty() || !isalpha(ob.getLastName()[0]) || ob.getLastName()[ob.getLastName().length() - 1] != ','))
 				{
 					bErrorOccurred = true;
 					cout<<"Invalid content format in the input file"<<endl;
@@ -394,7 +417,7 @@ int main(int argc, char *argv[])
 						bErrorOccurred = true;
 						break;
 					}
-					vStudents[i].index = i;
+					vStudents[i].setIndex(i);
 				}
 				
 				//Push the records to a Priority Queue because it handles the Max Heap logic
@@ -432,26 +455,22 @@ int main(int argc, char *argv[])
 					//that was chosen above.
 					//Because, we need to read from a file only when the record from that file has been
 					//selected, written to the final output file. That's the way merging works.
-					if(interFileList[ob.index] >> vStudents[ob.index])
+					if(interFileList[ob.getIndex()] >> vStudents[ob.getIndex()])
 					{
-						//Store the index to help determining where to read next record if this record is
-						//picked as best
-						vStudents[ob.index].index = ob.index;
-
 						//Keep pushing new records to the priority queue which internally maintains best record
-						pq.push(vStudents[ob.index]);
+						pq.push(vStudents[ob.getIndex()]);
 						continue;
 					}
 					else
 					{
 						//An intermediate file has been read till the end of file
-						if(interFileList[ob.index].eof())
+						if(interFileList[ob.getIndex()].eof())
 						{
 							//Delete from the list of intermediate file names
-							interFileList.erase(interFileList.begin() + ob.index);
+							interFileList.erase(interFileList.begin() + ob.getIndex());
 							
 							//Delete record from the vector to invalidate this index
-							vStudents.erase(vStudents.begin() + ob.index);
+							vStudents.erase(vStudents.begin() + ob.getIndex());
 						}
 					}
 				}
